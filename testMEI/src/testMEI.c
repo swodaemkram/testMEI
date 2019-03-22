@@ -1,4 +1,4 @@
-/*
+02/*
  ============================================================================
  Name        : testMEI.c
  Author      : Mark Meadows
@@ -78,7 +78,10 @@ int main()
     //wlen = write(fd, "%x7f", 4);//Transmit Data
 
 
-    char buff[]="\x02\x07\x60\x00\x00\x04\x03";
+    char buff[]="\x02\x08\x60\x00\x00\x04\x03\x1f";
+    printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],buff[7]);
+
+
     write(fd,buff,sizeof(buff));
 
     //if (wlen != 7) {
