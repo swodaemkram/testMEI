@@ -1,4 +1,4 @@
-02/*
+/*
  ============================================================================
  Name        : testMEI.c
  Author      : Mark Meadows
@@ -72,7 +72,7 @@ int main()
     //set_mincount(fd, 0);                /* set to pure timed read */
 
     /* simple output */
-    //wlen = write(fd, "Hello!\n", 7);//Transmit Data
+   //wlen = write(fd, "Hello!\n", 7);//Transmit Data
 
 
     //wlen = write(fd, "%x7f", 4);//Transmit Data
