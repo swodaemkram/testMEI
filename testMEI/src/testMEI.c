@@ -81,18 +81,21 @@ Finished with Comm port setup
 
     sleep(1);
 
-    char buff[]="\x02\x08\x60\x05\x03";
-    //char buff[]="\x02\x08\x60\x00\x00\x05\x03";
+
+    char buff[]="\x02\x08\x60\x00\x00\x05\x03";
+
     //char buff[] = "\x02\x08\x60\x00\x00\x05\x03\x6d";
     unsigned int crc_val;    //setup for return from crc
 
     int buff_len = sizeof(buff);
     crc_val =  do_crc(buff,buff_len);// Lets do CRC
+    printf("\nThis is the value that will be added to the packet %02x\n",crc_val);
+    printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
 
 
-    printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],buff[7]);
 
-     write(fd,buff,sizeof(buff));
+    exit(0);
+    write(fd,buff,sizeof(buff));
 
     tcdrain(fd);    /* delay for output */
 
@@ -105,16 +108,16 @@ Finished with Comm port setup
         rdlen = read(fd, buf, sizeof(buf) - 1);
         if (rdlen > 0) {
 
-#ifdef DISPLAY_STRING
+//#ifdef DISPLAY_STRING
             buf[rdlen] = 0;
             printf("Read %d: \"%s\"\n", rdlen, buf);
-#else /* display hex */
+//#else /* display hex */
             unsigned char   *p;
             printf("Read %d:", rdlen);
             for (p = buf; rdlen-- > 0; p++)
                 printf(" 0x%x", *p);
             printf("\n");
-#endif
+//#endif
         } else if (rdlen < 0) {
            // printf("Error from read: %d: %s\n", rdlen, strerror(errno));
         } else {  /* rdlen == 0 */

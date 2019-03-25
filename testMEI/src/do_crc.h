@@ -13,7 +13,8 @@
 #endif /* DO_CRC_H_ */
  int do_crc(char buff[], int buffer_len){
 
-	 printf("\n%02x%02x%02x%02x%02x%02x%02x\n",buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],buff[7]);
+	 printf("\n%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5]);
+
 	 printf("%d\n",buffer_len);
 
 
@@ -30,13 +31,8 @@
 	        }
 	        printf("%d\n",buffer_len);
 printf("the check sum = %02x\n",sum);
-exit(0);
 
 
 
-
-
-
-
-	// return(crc_val);
+	 return(sum);
 }
