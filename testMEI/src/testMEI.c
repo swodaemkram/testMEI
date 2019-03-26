@@ -82,10 +82,10 @@ Finished with Comm port setup
     //char buff[] = "\x02\x08\x60\x00\x00\x05\x03"; //MEI_GETSERIAL
     //char buff[] = "\x02\x08\x60\x00\x00\x06\x03"; //MEI_GETBOOTVER
     //char buff[] = "\x02\x08\x60\x00\x00\x07\x03"; //MEI_GETAPPVER
-    //char buff[] = "\x02\x08\x60\x00\x00\x08\x03"; //MEI_GETVARNAME
+    //char buff[] = "\x02\x08\x60\x00\x00\x08\x03"; //MEI_GETVARNAME <--- Gives us the denomination it uses example(USD)
     //char buff[] = "\x02\x08\x60\x00\x00\x09\x03"; //MEI_GETVERSION
-    char buff[] = "\x02\x08\x60\x00\x00\x0b\x03"; //MEI_GETQP
-    //char buff[] = "\x02\x08\x60\x00\x00\x0c\x03"; //MEI_GETPERF
+    //char buff[] = "\x02\x08\x60\x00\x00\x0b\x03"; //MEI_GETQP
+    char buff[] = "\x02\x08\x60\x00\x00\x0c\x03"; //MEI_GETPERF
     //char buff[] = "\x02\x08\x60\x00\x00\x7F\x03"; //MEI_RESET
     //char buff[] = "\x02\x08\x60\x00\x00\x70\x03"; //MEI_EXT
 
