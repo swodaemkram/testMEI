@@ -2,7 +2,7 @@
  ============================================================================
  Name        : testMEI.c
  Author      : Mark Meadows
- Version     :blah
+ Version     :blah blah blah
  Copyright   : copyright 2018
  Description : Hello World in C, Ansi-style
  ============================================================================
@@ -17,7 +17,7 @@
 #include <unistd.h>
 
 #include "do_crc.h"
-#include"StringToHex.h"
+
 
 int set_interface_attribs(int fd, int speed)
 {
@@ -78,32 +78,37 @@ Finished with Comm port setup
 ==============================================================================================
  */
 
+    //char buff[] = "\x02\x08\x60\x00\x00\x04\x03"; //MEI_GETMODEL
+    //char buff[] = "\x02\x08\x60\x00\x00\x05\x03"; //MEI_GETSERIAL
+    //char buff[] = "\x02\x08\x60\x00\x00\x06\x03"; //MEI_GETBOOTVER
+    //char buff[] = "\x02\x08\x60\x00\x00\x07\x03"; //MEI_GETAPPVER
+    //char buff[] = "\x02\x08\x60\x00\x00\x08\x03"; //MEI_GETVARNAME
+    //char buff[] = "\x02\x08\x60\x00\x00\x09\x03"; //MEI_GETVERSION
+    char buff[] = "\x02\x08\x60\x00\x00\x0b\x03"; //MEI_GETQP
+    //char buff[] = "\x02\x08\x60\x00\x00\x0c\x03"; //MEI_GETPERF
+    //char buff[] = "\x02\x08\x60\x00\x00\x7F\x03"; //MEI_RESET
+    //char buff[] = "\x02\x08\x60\x00\x00\x70\x03"; //MEI_EXT
 
+    char pkt[100] = {0};
 
-
-
-    //\\char buff[]="\x02\x08\x60\x00\x00\x05\x03";
-
-    char buff[] = "\x02\x08\x60\x00\x00\x05\x03\x6d";
-    //unsigned int crc_val;    //setup for return from crc
-    int crc_val;
+    unsigned int crc_val;
     int buff_len = sizeof(buff);
-    int pkt_size = buff_len + 1;
 
-    char pkt[pkt_size] ;
+    crc_val =  do_crc(buff,buff_len);// Lets do CRC
 
-    //\\crc_val =  do_crc(buff,buff_len);// Lets do CRC
-    sleep(1);
-    //\\printf("\nThis is the value that will be added to the packet %02x\n",crc_val);
-    //printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
-    //\\sprintf(pkt,"%02x%02x%02x%02x%02x%02x%02x%02x",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
-    //\\printf("\nthis is the packet I'm sending --> %s\n",pkt);
-    write(fd,buff,sizeof(buff));
+    int i = 0;
+    while(i < buff_len ) {
+    	pkt[i] = buff[i];
+    	i++;
+    }
 
-    //\\char *hex_pkt = {0};
-    //\\hex_pkt = string_to_hex(pkt);
-    //\\write(fd,pkt,sizeof(pkt));
+    pkt[i - 1] = crc_val;
 
+    printf("This is the string I'm sending --> %02x%02x%02x%02x%02x%02x%02x%02x\n\n",pkt[0],pkt[1],pkt[2],pkt[3],pkt[4],pkt[5],pkt[6],pkt[7]);
+	sleep(1);
+    //write(fd,buff,sizeof(buff));
+
+	write(fd,pkt,sizeof(pkt));
 
     tcdrain(fd);    /* delay for output */
 
