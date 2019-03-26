@@ -17,7 +17,7 @@
 #include <unistd.h>
 
 #include "do_crc.h"
-
+#include"StringToHex.h"
 
 int set_interface_attribs(int fd, int speed)
 {
@@ -82,9 +82,9 @@ Finished with Comm port setup
 
 
 
-    char buff[]="\x02\x08\x60\x00\x00\x05\x03";
+    //\\char buff[]="\x02\x08\x60\x00\x00\x05\x03";
 
-    //char buff[] = "\x02\x08\x60\x00\x00\x05\x03\x6d";
+    char buff[] = "\x02\x08\x60\x00\x00\x05\x03\x6d";
     //unsigned int crc_val;    //setup for return from crc
     int crc_val;
     int buff_len = sizeof(buff);
@@ -92,22 +92,17 @@ Finished with Comm port setup
 
     char pkt[pkt_size] ;
 
-    crc_val =  do_crc(buff,buff_len);// Lets do CRC
-
-    printf("\nThis is the value that will be added to the packet %02x\n",crc_val);
-    //printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
-    sprintf(pkt,"%02x%02x%02x%02x%02x%02x%02x%02x",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
-    printf("\nthis is the packet I'm sending --> %s\n",pkt);
-    //write(fd,buff,sizeof(buff));
-
-    int pkt_int = 0;
-    pkt_int = atoi(pkt);
-
-
+    //\\crc_val =  do_crc(buff,buff_len);// Lets do CRC
     sleep(1);
-    write(fd,pkt_int,sizeof(pkt_int));
+    //\\printf("\nThis is the value that will be added to the packet %02x\n",crc_val);
+    //printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
+    //\\sprintf(pkt,"%02x%02x%02x%02x%02x%02x%02x%02x",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
+    //\\printf("\nthis is the packet I'm sending --> %s\n",pkt);
+    write(fd,buff,sizeof(buff));
 
-
+    //\\char *hex_pkt = {0};
+    //\\hex_pkt = string_to_hex(pkt);
+    //\\write(fd,pkt,sizeof(pkt));
 
 
     tcdrain(fd);    /* delay for output */
