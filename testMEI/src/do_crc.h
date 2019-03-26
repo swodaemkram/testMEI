@@ -19,7 +19,8 @@
 
 
 	 int i=1;
-	 unsigned int sum;
+	 unsigned int sum = 0;
+
 	 buffer_len = buffer_len - 2;
 
 

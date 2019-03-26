@@ -79,23 +79,36 @@ Finished with Comm port setup
  */
 
 
-    sleep(1);
+
 
 
     char buff[]="\x02\x08\x60\x00\x00\x05\x03";
 
     //char buff[] = "\x02\x08\x60\x00\x00\x05\x03\x6d";
-    unsigned int crc_val;    //setup for return from crc
-
+    //unsigned int crc_val;    //setup for return from crc
+    int crc_val;
     int buff_len = sizeof(buff);
+    int pkt_size = buff_len + 1;
+
+    char pkt[pkt_size] ;
+
     crc_val =  do_crc(buff,buff_len);// Lets do CRC
+
     printf("\nThis is the value that will be added to the packet %02x\n",crc_val);
-    printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
+    //printf("\n%02x%02x%02x%02x%02x%02x%02x%02x\n",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
+    sprintf(pkt,"%02x%02x%02x%02x%02x%02x%02x%02x",buff[0],buff[1],buff[2],buff[3],buff[4],buff[5],buff[6],crc_val);
+    printf("\nthis is the packet I'm sending --> %s\n",pkt);
+    //write(fd,buff,sizeof(buff));
+
+    int pkt_int = 0;
+    pkt_int = atoi(pkt);
+
+
+    sleep(1);
+    write(fd,pkt_int,sizeof(pkt_int));
 
 
 
-    exit(0);
-    write(fd,buff,sizeof(buff));
 
     tcdrain(fd);    /* delay for output */
 
